@@ -40,9 +40,14 @@ def reset_draft_state():
 def generate_cards(deck_name: str, data, append: bool = False):
     """Reads the uploaded file and generates a teacher-style card set."""
 
-    file_type = data.name.split(".")[-1].lower()
+    extension_to_mime = {
+    "pdf": "application/pdf",
+    "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "md": "text/markdown",
+    "txt": "text/plain",
+}
+    file_type = extension_to_mime.get(data.name.split(".")[-1].lower())
     content = read_file(data, file_type)
-
     st.write("DEBUG CONTENT:", content)
     st.write("CONTENT TYPE:", type(content))
 
